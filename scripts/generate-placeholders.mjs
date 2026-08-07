@@ -12,27 +12,34 @@ function svg(width, height, from, to, label) {
     </linearGradient>
   </defs>
   <rect width="${width}" height="${height}" fill="url(#g)"/>
-  <text x="50%" y="50%" font-family="Georgia, serif" font-size="${Math.round(
-    Math.min(width, height) / 12
-  )}" fill="rgba(255,255,255,0.85)" text-anchor="middle" dominant-baseline="middle" letter-spacing="4">${label}</text>
+  ${
+    label
+      ? `<text x="50%" y="50%" font-family="Georgia, serif" font-size="${Math.round(
+          Math.min(width, height) / 12
+        )}" fill="rgba(255,255,255,0.85)" text-anchor="middle" dominant-baseline="middle" letter-spacing="4">${label}</text>`
+      : ""
+  }
 </svg>`;
 }
 
 const images = [
-  { name: "hero.svg", w: 1600, h: 1000, from: "#2b2b2b", to: "#5c5142", label: "COLLECTION" },
+  { name: "hero.svg", w: 1600, h: 1000, from: "#2f3b30", to: "#111111", label: "" },
   { name: "about.svg", w: 1200, h: 1000, from: "#3a3a3a", to: "#6b5d4f", label: "ATELIER" },
+
+  { name: "category-fille.svg", w: 900, h: 1100, from: "#c98a9c", to: "#5a3a44", label: "FILLE" },
+  { name: "category-garcon.svg", w: 900, h: 1100, from: "#6f9b7d", to: "#28362c", label: "GARÇON" },
   { name: "category-femme.svg", w: 900, h: 1100, from: "#8a7660", to: "#3f3a34", label: "FEMME" },
-  { name: "category-homme.svg", w: 900, h: 1100, from: "#4a4a4a", to: "#232323", label: "HOMME" },
   { name: "category-accessoires.svg", w: 900, h: 1100, from: "#c9a882", to: "#7a6650", label: "ACCESSOIRES" },
-  { name: "category-nouveautes.svg", w: 900, h: 1100, from: "#5c6b5f", to: "#2c332d", label: "NOUVEAUTÉS" },
-  { name: "product-1.svg", w: 900, h: 1200, from: "#726a5e", to: "#2e2a25", label: "ROBE ÉTÉ" },
-  { name: "product-2.svg", w: 900, h: 1200, from: "#4b4b4b", to: "#1c1c1c", label: "BLAZER" },
-  { name: "product-3.svg", w: 900, h: 1200, from: "#a08a6f", to: "#4a3f33", label: "CHEMISE" },
-  { name: "product-4.svg", w: 900, h: 1200, from: "#5a5a5a", to: "#232323", label: "PANTALON" },
-  { name: "product-5.svg", w: 900, h: 1200, from: "#c9a882", to: "#8a7154", label: "SAC CUIR" },
-  { name: "product-6.svg", w: 900, h: 1200, from: "#3f4a3f", to: "#1b201b", label: "MANTEAU" },
-  { name: "product-7.svg", w: 900, h: 1200, from: "#8f6f5b", to: "#3a2b21", label: "FOULARD" },
-  { name: "product-8.svg", w: 900, h: 1200, from: "#6b6b6b", to: "#2a2a2a", label: "BASKETS" },
+
+  { name: "product-fille-1.svg", w: 900, h: 1200, from: "#d99aab", to: "#6b3f4a", label: "ENSEMBLE FILLE" },
+  { name: "product-fille-2.svg", w: 900, h: 1200, from: "#e7b8c4", to: "#8a5563", label: "ROBE FILLE" },
+  { name: "product-garcon-1.svg", w: 900, h: 1200, from: "#7fa88d", to: "#28362c", label: "ENSEMBLE MUSIC" },
+  { name: "product-garcon-2.svg", w: 900, h: 1200, from: "#e0895a", to: "#7a3d20", label: "ENSEMBLE MUSIC" },
+  { name: "product-garcon-3.svg", w: 900, h: 1200, from: "#9fa6ab", to: "#3c4144", label: "ENSEMBLE MUSIC" },
+  { name: "product-femme-1.svg", w: 900, h: 1200, from: "#726a5e", to: "#2e2a25", label: "ROBE ÉTÉ" },
+  { name: "product-femme-2.svg", w: 900, h: 1200, from: "#4b4b4b", to: "#1c1c1c", label: "BLAZER" },
+  { name: "product-accessoire-1.svg", w: 900, h: 1200, from: "#c9a882", to: "#8a7154", label: "SAC" },
+  { name: "product-accessoire-2.svg", w: 900, h: 1200, from: "#8f6f5b", to: "#3a2b21", label: "FOULARD" },
 ];
 
 for (const img of images) {

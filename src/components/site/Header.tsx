@@ -19,11 +19,12 @@ export default function Header({
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-[var(--color-background)]/90 border-b border-black/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-heading text-xl sm:text-2xl tracking-wide" style={{ color: "var(--color-text)" }}>
+        <Link href="/" className="flex items-center font-heading text-xl sm:text-2xl tracking-wide" style={{ color: "var(--color-text)" }}>
           {logoUrl ? (
-            <Image src={logoUrl} alt={siteName} width={40} height={40} className="h-10 w-10 object-contain" unoptimized />
-          ) : null}
-          {siteName}
+            <Image src={logoUrl} alt={siteName} width={160} height={56} className="h-10 sm:h-12 w-auto object-contain" unoptimized />
+          ) : (
+            siteName
+          )}
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 font-body text-sm">
