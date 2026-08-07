@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Singleton row (id = "main") holding every design/content setting the
+// admin can change: theme, hero, about, contact, socials.
+model SiteSettings {
+  id String @id @default("main")
+
+  // Brand
+  siteName String @default("Maison Élégance")
+  tagline  String @default("Mode moderne, style intemporel")
+  logoUrl  String @default("")
+
+  // Theme
+  primaryColor    String @default("#111111")
+  secondaryColor  String @default("#c9a882")
+  accentColor     String @default("#f5f1eb")
+  backgroundColor String @default("#ffffff")
+  textColor       String @default("#111111")
+  headingFont     String @default("Playfair Display")
+  bodyFont        String @default("Inter")
+
+  // Announcement bar
+  announcementText   String  @default("Livraison gratuite à partir de 150 DT")
+  announcementActive Boolean @default(true)
+
+  // Hero section
+  heroTitle    String @default("La mode qui vous ressemble")
+  heroSubtitle String @default("Découvrez notre nouvelle collection, pensée pour un style moderne et affirmé.")
+  heroImageUrl String @default("")
+  heroCtaLabel String @default("Découvrir la collection")
+  heroCtaLink  String @default("#categories")
+
+  // About section
+  aboutTitle    String @default("Notre histoire")
+  aboutText     String @default("Nous créons des pièces intemporelles, pensées pour durer et sublimer chaque silhouette.")
+  aboutImageUrl String @default("")
+
+  // Contact / footer
+  contactEmail   String @default("contact@maisonelegance.tn")
+  contactPhone   String @default("+216 00 000 000")
+  address        String @default("Tunis, Tunisie")
+  footerText     String @default("© Maison Élégance. Tous droits réservés.")
+  instagramUrl   String @default("")
+  facebookUrl    String @default("")
+  tiktokUrl      String @default("")
+  whatsappNumber String @default("")
+
+  currency String @default("DT")
+
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  imageUrl    String   @default("")
+  sortOrder   Int      @default(0)
+  isVisible   Boolean  @default(true)
+  products    Product[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  description   String   @default("")
+  price         Decimal  @default(0) @db.Decimal(10, 2)
+  comparePrice  Decimal? @db.Decimal(10, 2)
+  images        String[] @default([])
+  sizes         String[] @default([])
+  colors        String[] @default([])
+  stock         Int      @default(0)
+  isFeatured    Boolean  @default(false)
+  isVisible     Boolean  @default(true)
+  sortOrder     Int      @default(0)
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
