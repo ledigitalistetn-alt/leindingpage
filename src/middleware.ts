@@ -14,7 +14,7 @@ async function isValidSession(token: string | undefined) {
   }
 }
 
-export async function proxy(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === "/admin/login") {
