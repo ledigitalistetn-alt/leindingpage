@@ -94,6 +94,7 @@ model Product {
   description   String   @default("")
   price         Decimal  @default(0) @db.Decimal(10, 2)
   comparePrice  Decimal? @db.Decimal(10, 2)
+  costPrice     Decimal? @db.Decimal(10, 2)
   images        String[] @default([])
   sizes         String[] @default([])
   colors        String[] @default([])
@@ -141,7 +142,8 @@ model OrderItem {
   product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   productId   String?
   productName String
-  price       Decimal @db.Decimal(10, 2)
+  price       Decimal  @db.Decimal(10, 2)
+  costPrice   Decimal? @db.Decimal(10, 2)
   quantity    Int     @default(1)
   size        String  @default("")
   color       String  @default("")

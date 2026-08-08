@@ -24,6 +24,8 @@ function readProductFields(formData: FormData) {
   const price = Number(formData.get("price") || 0) || 0;
   const comparePriceRaw = String(formData.get("comparePrice") || "").trim();
   const comparePrice = comparePriceRaw ? Number(comparePriceRaw) : null;
+  const costPriceRaw = String(formData.get("costPrice") || "").trim();
+  const costPrice = costPriceRaw ? Number(costPriceRaw) : null;
   const categoryId = String(formData.get("categoryId") || "");
   const sizes = splitList(String(formData.get("sizes") || ""));
   const colors = splitList(String(formData.get("colors") || ""));
@@ -31,7 +33,21 @@ function readProductFields(formData: FormData) {
   const sortOrder = Number(formData.get("sortOrder") || 0) || 0;
   const isFeatured = formData.get("isFeatured") === "on";
   const isVisible = formData.get("isVisible") === "on";
-  return { name, slug, description, price, comparePrice, categoryId, sizes, colors, stock, sortOrder, isFeatured, isVisible };
+  return {
+    name,
+    slug,
+    description,
+    price,
+    comparePrice,
+    costPrice,
+    categoryId,
+    sizes,
+    colors,
+    stock,
+    sortOrder,
+    isFeatured,
+    isVisible,
+  };
 }
 
 async function uploadNewImages(formData: FormData): Promise<string[]> {

@@ -35,6 +35,7 @@ export async function createOrderWithStockUpdate(data: {
         product: { connect: { id: product.id } },
         productName: product.name,
         price,
+        costPrice: product.costPrice !== null ? Number(product.costPrice) : null,
         quantity: item.quantity,
         size: item.size ?? "",
         color: item.color ?? "",

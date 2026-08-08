@@ -77,6 +77,18 @@ export default function ProductForm({
         </label>
 
         <label className="block text-sm">
+          <span className="block text-neutral-600 mb-1">Coût d&apos;achat (optionnel)</span>
+          <input
+            type="number"
+            step="0.01"
+            name="costPrice"
+            defaultValue={product?.costPrice ? Number(product.costPrice) : ""}
+            className={inputClass}
+          />
+          <span className="block text-xs text-neutral-400 mt-1">Pour calculer automatiquement le bénéfice dans les statistiques.</span>
+        </label>
+
+        <label className="block text-sm">
           <span className="block text-neutral-600 mb-1">Tailles (séparées par virgule)</span>
           <input name="sizes" defaultValue={product?.sizes.join(", ")} placeholder="S, M, L" className={inputClass} />
         </label>

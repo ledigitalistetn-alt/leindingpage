@@ -106,6 +106,13 @@ export default async function AdminDashboardPage() {
             </Link>{" "}
             et le statut de livraison.
           </li>
+          <li>
+            • Consultez le chiffre d&apos;affaires et le bénéfice par produit dans{" "}
+            <Link href="/admin/stats" className="underline">
+              Statistiques
+            </Link>
+            .
+          </li>
         </ul>
       </div>
     </div>

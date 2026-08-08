@@ -3,9 +3,18 @@ import { prisma } from "@/lib/prisma";
 import StatusSelect from "@/components/admin/StatusSelect";
 import DeleteButton from "@/components/admin/DeleteButton";
 import { deleteOrder } from "./actions";
+import { getMonthYearRange, MONTH_LABELS, recentYears } from "@/lib/dateFilter";
 
-export default async function AdminOrdersPage() {
+export default async function AdminOrdersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ month?: string; year?: string }>;
+}) {
+  const { month, year } = await searchParams;
+  const range = getMonthYearRange(month, year);
+
   const orders = await prisma.order.findMany({
+    where: range ? { createdAt: { gte: range.start, lt: range.end } } : undefined,
     orderBy: { createdAt: "desc" },
     include: { items: true },
   });
@@ -24,6 +33,39 @@ export default async function AdminOrdersPage() {
           + Nouvelle commande
         </Link>
       </div>
+
+      <form method="get" className="flex items-end gap-3 mb-4">
+        <label className="block text-sm">
+          <span className="block text-neutral-600 mb-1">Mois</span>
+          <select name="month" defaultValue={month ?? ""} className="rounded-lg border border-neutral-300 px-3 py-2 text-sm">
+            <option value="">Tous</option>
+            {MONTH_LABELS.map((label, i) => (
+              <option key={label} value={i + 1}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block text-sm">
+          <span className="block text-neutral-600 mb-1">Année</span>
+          <select name="year" defaultValue={year ?? ""} className="rounded-lg border border-neutral-300 px-3 py-2 text-sm">
+            <option value="">Toutes</option>
+            {recentYears().map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button type="submit" className="rounded-lg bg-neutral-900 text-white px-4 py-2 text-sm font-medium hover:bg-neutral-800 transition">
+          Filtrer
+        </button>
+        {(month || year) && (
+          <Link href="/admin/orders" className="text-sm text-neutral-500 hover:text-neutral-800 pb-2">
+            Réinitialiser
+          </Link>
+        )}
+      </form>
 
       <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
         <table className="w-full text-sm">
@@ -68,7 +110,7 @@ export default async function AdminOrdersPage() {
             {orders.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-4 py-8 text-center text-neutral-400">
-                  Aucune commande pour le moment.
+                  Aucune commande pour cette période.
                 </td>
               </tr>
             )}
