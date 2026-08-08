@@ -169,6 +169,20 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         </Field>
       </Section>
 
+      <Section title="Marketing & tracking" description="Pour suivre vos visiteurs et lancer des publicités Facebook/Instagram.">
+        <Field label="Meta Pixel ID" className="sm:col-span-2">
+          <input
+            name="metaPixelId"
+            defaultValue={settings.metaPixelId}
+            placeholder="ex: 1234567890123456"
+            className={inputClass}
+          />
+          <span className="block text-xs text-neutral-400 mt-1">
+            Juste le numéro d&apos;ID (Meta Events Manager → Pixels → Détails), pas le code complet.
+          </span>
+        </Field>
+      </Section>
+
       <div className="flex items-center gap-3 sticky bottom-4">
         <button
           type="submit"

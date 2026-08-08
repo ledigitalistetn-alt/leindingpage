@@ -68,6 +68,9 @@ model SiteSettings {
 
   currency String @default("DT")
 
+  // Marketing / tracking
+  metaPixelId String @default("")
+
   updatedAt DateTime @updatedAt
 }
 

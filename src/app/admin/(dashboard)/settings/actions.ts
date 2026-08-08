@@ -28,6 +28,11 @@ export async function updateSettings(_prevState: SettingsState, formData: FormDa
     create: { id: "main" },
   });
 
+  const metaPixelIdRaw = str(formData, "metaPixelId");
+  if (metaPixelIdRaw && !/^\d+$/.test(metaPixelIdRaw)) {
+    return { error: "Le Meta Pixel ID doit contenir uniquement des chiffres (juste l'ID, pas le code complet)." };
+  }
+
   try {
     const [logoUrl, heroImageUrl, aboutImageUrl] = await Promise.all([
       maybeUploadImage(formData, "logo", current.logoUrl),
@@ -67,6 +72,7 @@ export async function updateSettings(_prevState: SettingsState, formData: FormDa
         tiktokUrl: str(formData, "tiktokUrl"),
         whatsappNumber: str(formData, "whatsappNumber"),
         currency: str(formData, "currency") || current.currency,
+        metaPixelId: metaPixelIdRaw,
       },
     });
   } catch (e) {

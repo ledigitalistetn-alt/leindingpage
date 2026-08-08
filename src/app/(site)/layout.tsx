@@ -6,6 +6,7 @@ import AnnouncementBar from "@/components/site/AnnouncementBar";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import WhatsAppFloatingButton from "@/components/site/WhatsAppFloatingButton";
+import MetaPixel from "@/components/site/MetaPixel";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +39,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <div className="flex flex-col min-h-screen font-body" style={{ background: "var(--color-background)", color: "var(--color-text)" }}>
       <style dangerouslySetInnerHTML={{ __html: themeVars }} />
+      <MetaPixel pixelId={settings.metaPixelId} />
       <link rel="stylesheet" href={googleFontsHref(settings.headingFont, settings.bodyFont)} />
       {settings.announcementActive && <AnnouncementBar text={settings.announcementText} />}
       <Header siteName={settings.siteName} logoUrl={settings.logoUrl} categories={categories} />
