@@ -9,6 +9,7 @@ const links = [
   { href: "/admin/settings", label: "Design & Contenu" },
   { href: "/admin/categories", label: "Catégories" },
   { href: "/admin/products", label: "Produits" },
+  { href: "/admin/orders", label: "Commandes" },
 ];
 
 export default function Sidebar() {

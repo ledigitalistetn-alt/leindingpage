@@ -7,7 +7,13 @@ import { deleteProduct } from "./actions";
 export default async function AdminProductsPage() {
   const products = await prisma.product.findMany({
     orderBy: { sortOrder: "asc" },
-    include: { category: true },
+    include: {
+      category: true,
+      orderItems: {
+        where: { order: { status: { not: "CANCELLED" } } },
+        select: { quantity: true },
+      },
+    },
   });
 
   return (
@@ -34,6 +40,7 @@ export default async function AdminProductsPage() {
               <th className="px-4 py-3 font-medium">Catégorie</th>
               <th className="px-4 py-3 font-medium">Prix</th>
               <th className="px-4 py-3 font-medium">Stock</th>
+              <th className="px-4 py-3 font-medium">Vendus</th>
               <th className="px-4 py-3 font-medium">Visible</th>
               <th className="px-4 py-3 font-medium text-right">Actions</th>
             </tr>
@@ -55,6 +62,9 @@ export default async function AdminProductsPage() {
                 <td className="px-4 py-3 text-neutral-500">{p.category.name}</td>
                 <td className="px-4 py-3 text-neutral-700">{Number(p.price).toFixed(2)}</td>
                 <td className="px-4 py-3 text-neutral-500">{p.stock}</td>
+                <td className="px-4 py-3 text-neutral-500">
+                  {p.orderItems.reduce((sum, it) => sum + it.quantity, 0)}
+                </td>
                 <td className="px-4 py-3">
                   <span className={`inline-block h-2 w-2 rounded-full ${p.isVisible ? "bg-green-500" : "bg-neutral-300"}`} />
                 </td>
@@ -68,7 +78,7 @@ export default async function AdminProductsPage() {
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-neutral-400">
+                <td colSpan={8} className="px-4 py-8 text-center text-neutral-400">
                   Aucun produit pour le moment.
                 </td>
               </tr>
