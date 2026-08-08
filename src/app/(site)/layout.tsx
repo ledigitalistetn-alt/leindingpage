@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getSiteSettings } from "@/lib/settings";
 import { prisma } from "@/lib/prisma";
 import { googleFontsHref } from "@/lib/fonts";
@@ -7,6 +8,14 @@ import Footer from "@/components/site/Footer";
 import WhatsAppFloatingButton from "@/components/site/WhatsAppFloatingButton";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: settings.siteName,
+    description: settings.tagline,
+  };
+}
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const [settings, categories] = await Promise.all([
